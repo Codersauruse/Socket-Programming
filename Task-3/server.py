@@ -55,21 +55,13 @@ def handle_client(client_socket, client_address):
 
     try:
 
-        # Receive role
-        role_data = client_socket.recv(1024)
+        data = client_socket.recv(1024)
 
-        if not role_data:
+        if not data:
             return
 
-        role = role_data.decode("utf-8")
-
-        # Receive topic
-        topic_data = client_socket.recv(1024)
-
-        if not topic_data:
-            return
-
-        topic = topic_data.decode("utf-8")
+        role, topic = data.decode("utf-8").split("|", 1)
+        
 
         print(
             f"{role} connected from "
@@ -163,7 +155,11 @@ server_socket = socket.socket(
     socket.SOCK_STREAM
 )
 
-
+server_socket.setsockopt(
+    socket.SOL_SOCKET,
+    socket.SO_REUSEADDR,
+    1
+)
 
 server_socket.bind((HOST, PORT))
 

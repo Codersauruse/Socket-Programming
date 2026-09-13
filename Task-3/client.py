@@ -83,16 +83,7 @@ print(f"Topic: {TOPIC}")
 # --------------------------------
 
 client_socket.sendall(
-    ROLE.encode("utf-8")
-)
-
-
-# --------------------------------
-# Send topic
-# --------------------------------
-
-client_socket.sendall(
-    TOPIC.encode("utf-8")
+    f"{ROLE}|{TOPIC}".encode("utf-8")
 )
 
 
